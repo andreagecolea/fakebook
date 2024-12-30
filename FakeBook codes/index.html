@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <title>Login and Sign Up</title>
+    <link rel="icon" href="https://clipart-library.com/images_k/thought-bubble-png-transparent/thought-bubble-png-transparent-14.png">
+    <link rel="shortcut icon" href="https://clipart-library.com/images_k/thought-bubble-png-transparent/thought-bubble-png-transparent-14.png">
+<style>
+    body {
+    background-size: cover; 
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    }
+    .form-container .btn:hover {
+        background: rgb(207, 15, 15);
+        color: #fff;
+    }
+    .container {
+            width: 100%;
+            max-width: 400px;
+        }body {
+    background-size: cover; 
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    }
+    .form-container .btn:hover {
+        background: rgb(207, 15, 15);
+        color: #fff;
+    }
+    .container {
+            width: 100%;
+            max-width: 400px;
+        }
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Login</h2>
+            <div class="line"></div>
+            <form action="login.php" method="post">
+
+                <div class="input-box">
+                <input type="text" id="login_username" name="login_username" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+                </div>
+
+                <div class="input-box">
+                <input type="password" id="login_password" name="login_password" placeholder="Password" required>
+                <i class="bi bi-eye-slash-fill" onclick="pass()" id="pass-icon"></i>
+                </div>
+
+                <div class="remember">
+                <label><input type="checkbox" id="rememberCheckbox"> Remember me</label>
+                </div>
+                <button type="submit" class="btn">Login</button>
+
+                <div class="register">
+                <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const loginStatus = urlParams.get('login');
+
+            if (loginStatus === 'error') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid credentials!<br>Please try again.'
+                });
+            }
+        });
+    </script>
+    <script>
+        var a;
+        function pass() {
+            if (a == 1) {
+                document.getElementById('login_password').type = 'password';
+                document.getElementById('pass-icon').classList.remove('bi-eye-fill');
+                document.getElementById('pass-icon').classList.add('bi-eye-slash-fill');
+                a = 0;
+            } else {
+                document.getElementById('login_password').type = 'text';
+                document.getElementById('pass-icon').classList.remove('bi-eye-slash-fill');
+                document.getElementById('pass-icon').classList.add('bi-eye-fill');
+                a = 1;
+            }
+        }
+        document.getElementById('rememberCheckbox').addEventListener('change', function() {
+            var rememberCheckbox = document.getElementById('rememberCheckbox');
+            var loginUsername = document.getElementById('login_username');
+            var loginPassword = document.getElementById('login_password');
+
+            if (rememberCheckbox.checked) {
+                localStorage.setItem('rememberedUsername', loginUsername.value);
+                localStorage.setItem('rememberedPassword', loginPassword.value);
+            } else {
+                localStorage.removeItem('rememberedUsername');
+                localStorage.removeItem('rememberedPassword');
+            }
+        });
+
+        window.addEventListener('load', function() {
+            var rememberedUsername = localStorage.getItem('rememberedUsername');
+            var rememberedPassword = localStorage.getItem('rememberedPassword');
+            var rememberCheckbox = document.getElementById('rememberCheckbox');
+
+            if (rememberedUsername && rememberedPassword) {
+                document.getElementById('login_username').value = rememberedUsername;
+                document.getElementById('login_password').value = rememberedPassword;
+                rememberCheckbox.checked = true;
+            }
+        });
+    </script>
+</body>
+</html>
